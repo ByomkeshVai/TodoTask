@@ -6,6 +6,7 @@ import { TTodo, TTodoFilter } from "@/redux/features/todoSlice";
 import { useGetTodosQuery } from "@/redux/api/baseApi";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import BounceLoader from "react-spinners/BounceLoader";
 
 const TodoContainer = () => {
   const [parentRef] = useAutoAnimate();
@@ -13,7 +14,13 @@ const TodoContainer = () => {
   const [priority, setPriority] = useState<TTodoFilter>("ALL");
   const { data, isLoading } = useGetTodosQuery(priority);
 
-  if (isLoading) return <p className="text-2xl font-semibold">Loading...</p>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <BounceLoader color="#04A6F9" />
+      </div>
+    );
+  }
 
   const tasksPending = data.data.filter(
     (task: TTodo) => !task.isCompleted
@@ -28,7 +35,7 @@ const TodoContainer = () => {
   });
   return (
     <>
-      <div className="bg-primary-gradient rounded-xl p-[5px] mb-3">
+      <div className="p-[5px] mb-3">
         <div className="flex items-center justify-between p-3 bg-white rounded-lg">
           <AddTodoModal todo={null}>
             <Button className="text-xl font-semibold bg-primary-gradient">

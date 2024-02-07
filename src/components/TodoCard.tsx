@@ -58,7 +58,7 @@ const TodoCard = ({
       <div className="flex items-center flex-1">
         <div
           className={`
-        size-5 rounded-full space-x-2
+        size-3 rounded-full mr-4
         ${priority === "HIGH" && "bg-red-600"}
         ${priority === "MEDIUM" && "bg-yellow-600"}
         ${priority === "LOW" && "bg-green-600"}
