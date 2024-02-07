@@ -45,5 +45,5 @@ npm run dev
 
 ## Live Preview
 
-- Frontend - todoapptask247.netlify.app
+- Frontend - [todoapptask247.netlify.app](https://todoapptask247.netlify.app/)
 - Backend - https://todo-backend-pink-theta.vercel.app
