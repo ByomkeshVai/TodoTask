@@ -6,10 +6,10 @@ export type TTodoPriority = "HIGH" | "MEDIUM" | "LOW";
 export type TTodoFilter = TTodoPriority | "ALL";
 
 export interface TTodo {
-  id: string;
+  id?: string;
   title: string;
-  priority: string;
   description: string;
+  priority: TTodoPriority;
   isCompleted?: boolean;
 }
 

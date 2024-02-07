@@ -113,7 +113,9 @@ const AddTodoModal = ({ todo, children }: TAddTodoModalProps) => {
             <div className="grid items-center grid-cols-4 gap-4">
               <Select
                 defaultValue={priority}
-                onValueChange={(value) => setPriority(value as TTodoPriority)}
+                onValueChange={(value: string) =>
+                  setPriority(value as TTodoPriority)
+                }
               >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Set Priority" />
