@@ -3,7 +3,7 @@ import AddTodoModal from "./AddTodoModal";
 import TodoCard from "./TodoCard";
 import TodoFilter from "./TodoFilter";
 import { TTodo, TTodoFilter } from "@/redux/features/todoSlice";
-import { useGetTodosQuery } from "@/redux/api/baseAPI";
+import { useGetTodosQuery } from "@/redux/api/baseApi";
 import { useState } from "react";
 import { Button } from "./ui/button";
 

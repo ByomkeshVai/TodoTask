@@ -18,8 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useAddTodoMutation, useUpdateTodoMutation } from "@/redux/api/baseAPI";
 import { TTodo, TTodoPriority } from "@/redux/features/todoSlice";
+import { useAddTodoMutation, useUpdateTodoMutation } from "@/redux/api/baseApi";
 
 type TAddTodoModalProps = {
   todo: (TTodo & { _id: string }) | null;
