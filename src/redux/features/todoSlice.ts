@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface TTodo {
-  id?: string;
+  id: string;
   title: string;
   priority: string;
   description: string;

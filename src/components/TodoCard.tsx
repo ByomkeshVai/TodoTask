@@ -1,22 +1,8 @@
 import { useAppDispatch } from "@/redux/hook";
 import { Button } from "./ui/button";
-import { removeTodo, toggleCompleted } from "@/redux/features/todoSlice";
+import { TTodo, removeTodo, toggleCompleted } from "@/redux/features/todoSlice";
 
-type TTodoCardProps = {
-  id: string;
-  title: string;
-  priority: string;
-  description: string;
-  isCompleted: boolean;
-};
-
-const TodoCard = ({
-  title,
-  description,
-  id,
-  isCompleted,
-  priority,
-}: TTodoCardProps) => {
+const TodoCard = ({ title, description, id, isCompleted, priority }: TTodo) => {
   const dispatch = useAppDispatch();
 
   const toggleState = () => {

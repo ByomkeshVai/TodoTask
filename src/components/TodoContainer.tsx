@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/redux/hook";
 import AddTodoModal from "./AddTodoModal";
 import TodoCard from "./TodoCard";
+import TodoFilter from "./TodoFilter";
 
 const TodoContainer = () => {
   const { todos } = useAppSelector((state) => state.todos);
@@ -8,6 +9,7 @@ const TodoContainer = () => {
     <>
       <div className="flex justify-between mb-5 ">
         <AddTodoModal />
+        <TodoFilter />
       </div>
       <div className="bg-primary-gradient  rounded-xl  p-[5px]">
         <div className="p-5 space-y-3 bg-white rounded-lg ">
