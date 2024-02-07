@@ -28,9 +28,7 @@ type TAddTodoModalProps = {
 
 const AddTodoModal = ({ todo, children }: TAddTodoModalProps) => {
   const [task, setTask] = useState(todo === null ? "" : todo?.title);
-  const [description, setDescription] = useState(
-    todo === null ? "" : todo?.description
-  );
+  const [description, setDescription] = useState(todo?.description);
   const [priority, setPriority] = useState<TTodoPriority>(
     todo === null ? "HIGH" : todo?.priority
   );
@@ -91,6 +89,7 @@ const AddTodoModal = ({ todo, children }: TAddTodoModalProps) => {
                 Task
               </Label>
               <Input
+                defaultValue={todo?.title}
                 onBlur={(e) => setTask(e.target.value)}
                 id="task"
                 className="col-span-3"
@@ -101,6 +100,7 @@ const AddTodoModal = ({ todo, children }: TAddTodoModalProps) => {
                 Description
               </Label>
               <Input
+                defaultValue={description}
                 onBlur={(e) => setDescription(e.target.value)}
                 id="description"
                 className="col-span-3"

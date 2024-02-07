@@ -37,7 +37,7 @@ const TodoContainer = () => {
           </AddTodoModal>
           {data?.data?.length > 0 ? (
             <h2 className="inline-block px-2 text-lg font-semibold text-center text-transparent bg-primary-gradient bg-clip-text">
-              You have currently {tasksPending} tasks pending and
+              You have currently {tasksPending} tasks pending and{" "}
               {tasksHighPriority ? tasksHighPriority : "none"} have high
               priority.
             </h2>
