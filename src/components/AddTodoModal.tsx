@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -11,49 +11,71 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useAppDispatch } from "@/redux/hook";
-import { addTodo } from "@/redux/features/todoSlice";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { useAddTodoMutation, useUpdateTodoMutation } from "@/redux/api/baseAPI";
+import { TTodo, TTodoPriority } from "@/redux/features/todoSlice";
 
-const AddTodoModal = () => {
-  const [task, setTask] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [open, setOpen] = useState(false);
+type TAddTodoModalProps = {
+  todo: (TTodo & { _id: string }) | null;
+  children: ReactNode;
+};
 
-  const dispatch = useAppDispatch();
+const AddTodoModal = ({ todo, children }: TAddTodoModalProps) => {
+  const [task, setTask] = useState(todo === null ? "" : todo?.title);
+  const [description, setDescription] = useState(
+    todo === null ? "" : todo?.description
+  );
+  const [priority, setPriority] = useState<TTodoPriority>(
+    todo === null ? "HIGH" : todo?.priority
+  );
+
+  const [addTodo, { isLoading: isAddLoading }] = useAddTodoMutation();
+  const [updateTodo, { isLoading: isUpdateLoading }] = useUpdateTodoMutation();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const randomString = Math.random().toString(36).substring(2, 7);
-    const taskDetails = {
-      id: randomString,
-      title: task,
-      description: description,
-      priority: priority,
-    };
-    dispatch(addTodo(taskDetails));
+    if (!task || !description) return;
+
+    // * for RTK Query
+    if (todo === null) {
+      addTodo({
+        title: task,
+        priority,
+        description,
+        isCompleted: false,
+      });
+    } else {
+      updateTodo({
+        _id: todo._id,
+        todo: {
+          title: task,
+          description,
+          priority,
+          isCompleted: todo.isCompleted,
+        },
+      });
+    }
+
     setTask("");
     setDescription("");
-    setPriority("");
+    setPriority("HIGH");
   };
 
   return (
     <Dialog>
+      {!isAddLoading && !isUpdateLoading ? (
+        <DialogTrigger asChild>{children}</DialogTrigger>
+      ) : (
+        <Button disabled className="text-xl font-semibold bg-primary-gradient">
+          {todo === null ? "Adding Todo..." : "Updating..."}
+        </Button>
+      )}
       <DialogTrigger asChild>
         <Button className="text-xl font-semibold bg-primary-gradient">
           Add todo
@@ -89,54 +111,26 @@ const AddTodoModal = () => {
               />
             </div>
             <div className="grid items-center grid-cols-4 gap-4">
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-[200px] justify-between"
-                  >
-                    {priority ? priority : "Set Priority"}
-                    <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search Priority..." />
-                    <CommandEmpty>No Priority found.</CommandEmpty>
-                    <CommandGroup>
-                      {priorities.map((values) => (
-                        <CommandItem
-                          key={values.value}
-                          value={values.value}
-                          onSelect={(currentValue) => {
-                            setPriority(
-                              currentValue === priority ? "" : currentValue
-                            );
-                            setOpen(false);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              priority === values.value
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {values.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+              <Select
+                defaultValue={priority}
+                onValueChange={(value) => setPriority(value as TTodoPriority)}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Set Priority" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="HIGH">High</SelectItem>
+                  <SelectItem value="MEDIUM">Medium</SelectItem>
+                  <SelectItem value="LOW">Low</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="flex justify-end">
             <DialogClose asChild>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">
+                {todo ? "Save changes" : "Add Todo"}
+              </Button>
             </DialogClose>
           </div>
         </form>

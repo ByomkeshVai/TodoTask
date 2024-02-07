@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -9,36 +8,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { setFiltering } from "@/redux/features/todoSlice";
-import { useAppDispatch } from "@/redux/hook";
+import { TTodoFilter } from "@/redux/features/todoSlice";
+import { Dispatch } from "react";
 
-const TodoFilter = () => {
-  const [priorityFilter, setPriorityFilter] = useState("");
-  const dispatch = useAppDispatch();
+type TTodofilterProps = {
+  priority: TTodoFilter;
+  setPriority: Dispatch<React.SetStateAction<TTodoFilter>>;
+};
 
-  const handleFilterChange = (value: string) => {
-    setPriorityFilter(value);
-    dispatch(setFiltering(value));
-  };
-
+const TodoFilter = ({ priority, setPriority }: TTodofilterProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="text-xl font-semibold bg-primary-gradient">
-          {priorityFilter ? priorityFilter : "Filter"}
+          Filter
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Filter by priority</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
-          value={priorityFilter}
-          onValueChange={handleFilterChange}
+          value={priority}
+          onValueChange={(value) => setPriority(value as TTodoFilter)}
         >
-          <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="high">High</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="medium">Medium</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="low">Low</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="ALL">All</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="HIGH">High</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="MEDIUM">Medium</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="LOW">Low</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
