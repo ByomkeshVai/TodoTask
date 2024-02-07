@@ -29,21 +29,6 @@ import { cn } from "@/lib/utils";
 import { useAppDispatch } from "@/redux/hook";
 import { addTodo } from "@/redux/features/todoSlice";
 
-const priorities = [
-  {
-    value: "High",
-    label: "High",
-  },
-  {
-    value: "Medium",
-    label: "Medium",
-  },
-  {
-    value: "Low",
-    label: "Low",
-  },
-];
-
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
@@ -62,6 +47,9 @@ const AddTodoModal = () => {
       priority: priority,
     };
     dispatch(addTodo(taskDetails));
+    setTask("");
+    setDescription("");
+    setPriority("");
   };
 
   return (

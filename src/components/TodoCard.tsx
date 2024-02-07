@@ -16,8 +16,9 @@ const TodoCard = ({ title, description, id, isCompleted, priority }: TTodo) => {
         type="checkbox"
         name="complete"
         id="complete"
+        className=""
       />
-      <p className="font-semibold">{title}</p>
+      <p className="flex-1 font-semibold">{title}</p>
       <div>
         {isCompleted ? (
           <p className="text-green-500">Done</p>
@@ -25,8 +26,8 @@ const TodoCard = ({ title, description, id, isCompleted, priority }: TTodo) => {
           <p className="text-red-500">Pending</p>
         )}
       </div>
-      <p>{description}</p>
-      <p>{priority}</p>
+      <p className="flex-1">{description}</p>
+      <p className="flex-1">{priority}</p>
       <div className="space-x-5">
         <Button className="bg-red-500" onClick={() => dispatch(removeTodo(id))}>
           <svg

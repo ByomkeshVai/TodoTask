@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import todoSlice from "./features/todoSlice";
+import { baseApi } from "./api/baseAPI";
 
 export const store = configureStore({
   reducer: {
     todos: todoSlice,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
 });
 

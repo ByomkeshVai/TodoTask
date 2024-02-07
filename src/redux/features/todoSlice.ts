@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export type TTodoPriority = "HIGH" | "MEDIUM" | "LOW";
+
+export type TTodoFilter = TTodoPriority | "ALL";
+
 export interface TTodo {
   id: string;
   title: string;
@@ -11,10 +15,12 @@ export interface TTodo {
 
 export interface TInitialState {
   todos: TTodo[];
+  filter: TTodoFilter;
 }
 
 const initialState: TInitialState = {
   todos: [],
+  filter: "ALL",
 };
 
 export const todoSlice = createSlice({
@@ -37,6 +43,7 @@ export const todoSlice = createSlice({
       }
     },
     setFiltering: (state, action: PayloadAction<string>) => {
+      console.log(action.payload);
       state.todos.find((todo) => todo.priority === action.payload);
     },
   },
