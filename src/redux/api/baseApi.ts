@@ -28,7 +28,7 @@ export const baseApi = createApi({
     addTodo: builder.mutation({
       query: (todo: TTodo) => {
         return {
-          url: "/tasks",
+          url: "/task",
           method: "POST",
           body: todo,
         };
@@ -39,7 +39,7 @@ export const baseApi = createApi({
     updateTodo: builder.mutation({
       query: (options: { _id: string; todo: TTodo }) => {
         return {
-          url: `/tasks/${options._id}`,
+          url: `/task/${options._id}`,
           method: "PUT",
           body: options.todo,
         };
@@ -50,7 +50,7 @@ export const baseApi = createApi({
     deleteTodo: builder.mutation({
       query: (id: string) => {
         return {
-          url: `/tasks/${id}`,
+          url: `/task/${id}`,
           method: "DELETE",
         };
       },
