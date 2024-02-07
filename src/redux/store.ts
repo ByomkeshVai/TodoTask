@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import todoSlice from "./features/todoSlice";
-import { baseApi } from "./api/baseAPI";
+import { baseApi } from "./api/baseApi";
 
 export const store = configureStore({
   reducer: {
     todos: todoSlice,
     [baseApi.reducerPath]: baseApi.reducer,
+  },
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware().concat(baseApi.middleware);
   },
 });
 

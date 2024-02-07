@@ -76,11 +76,7 @@ const AddTodoModal = ({ todo, children }: TAddTodoModalProps) => {
           {todo === null ? "Adding Todo..." : "Updating..."}
         </Button>
       )}
-      <DialogTrigger asChild>
-        <Button className="text-xl font-semibold bg-primary-gradient">
-          Add todo
-        </Button>
-      </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add task</DialogTitle>

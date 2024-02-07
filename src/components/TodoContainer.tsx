@@ -12,7 +12,6 @@ const TodoContainer = () => {
 
   const [priority, setPriority] = useState<TTodoFilter>("ALL");
   const { data, isLoading } = useGetTodosQuery(priority);
-  console.log(data);
 
   if (isLoading) return <p className="text-2xl font-semibold">Loading...</p>;
 
@@ -36,24 +35,25 @@ const TodoContainer = () => {
               Add Todo
             </Button>
           </AddTodoModal>
-          <h2 className="inline-block px-2 text-lg font-semibold text-center text-transparent bg-primary-gradient bg-clip-text">
-            You have currently {tasksPending} tasks pending and
-            {tasksHighPriority ? tasksHighPriority : "none"} have high priority.
-          </h2>
+          {data?.data?.length > 0 ? (
+            <h2 className="inline-block px-2 text-lg font-semibold text-center text-transparent bg-primary-gradient bg-clip-text">
+              You have currently {tasksPending} tasks pending and
+              {tasksHighPriority ? tasksHighPriority : "none"} have high
+              priority.
+            </h2>
+          ) : (
+            ""
+          )}
+
           <TodoFilter priority={priority} setPriority={setPriority} />
         </div>
       </div>
-      <div className="bg-primary-gradient w-full h-full rounded-xl p-[5px]">
-        <div
-          ref={parentRef}
-          className="w-full h-full p-5 space-y-5 bg-white rounded-lg"
-        >
+      <div className="bg-primary-gradient  rounded-xl p-[5px]">
+        <div ref={parentRef} className="p-5 space-y-5 bg-white rounded-lg ">
           {data?.data?.length > 0 ? (
             filteredTodos.map((todo) => <TodoCard key={todo._id} {...todo} />)
           ) : (
-            <div className="flex items-center justify-center p-5 text-2xl font-bold bg-white rounded-md">
-              <p>There is no task pending</p>
-            </div>
+            <p className="text-center text-gray-500">No task available</p>
           )}
         </div>
       </div>
